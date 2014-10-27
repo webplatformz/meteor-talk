@@ -3,7 +3,11 @@ Talks = new Mongo.Collection('talks');
 if (Meteor.isClient) {
     Template.talks.helpers({
         talks: function () {
-            return Talks.find().fetch();
+            return Talks.find({}, {
+                sort: {
+                    votes: -1
+                }
+            }).fetch();
         }
     });
 
