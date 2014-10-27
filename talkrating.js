@@ -7,6 +7,15 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.talks.events({
+        'click dd button': function () {
+            this.votes ? this.votes++ : this.votes = 1;
+            Talks.update({
+                _id: this._id
+            }, this);
+        }
+    });
+
     Template.talkForm.events({
         'click form[name=addEntryForm] button': function (event) {
             var form = $(event.target).parents('form'),
