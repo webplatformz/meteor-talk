@@ -1,1 +1,23 @@
 /* CSS declarations go here */
+
+#talks {
+    background-color: #41b19e;
+}
+#talks dt h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+#talks h3 {
+    font-size: 20px;
+}
+#talks h3,
+#talks h1 {
+    color: white;
+}
+#talks h3 small {
+    color: rgb(115, 227, 208);
+}
+body {
+    background-color: #f0f4f4;
+}

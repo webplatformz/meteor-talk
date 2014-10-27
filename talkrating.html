@@ -1,14 +1,36 @@
 <head>
-  <title>talkrating</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>talkrating</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+    <div id="talks">
+        {{> talks}}
+    </div>
+    <div id="talkForm">
+        {{> talkForm}}
+    </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="talks">
+    <div class="container">
+        <h1>Talks</h1>
+        <hr />
+        <dl class="dl-horizontal">
+            {{#each talks}}
+            <dt><h3>{{title}}</h3></dt>
+            <dd>
+                <h3><small>{{description}}</small></h3>
+            </dd>
+            {{/each}}
+        </dl>
+    </div>
+</template>
+
+<template name="talkForm">
+    <div class="container">
+
+    </div>
 </template>
