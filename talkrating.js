@@ -1,6 +1,8 @@
 Talks = new Mongo.Collection('talks');
 
 if (Meteor.isClient) {
+    Meteor.subscribe('talks');
+
     Template.talks.helpers({
         talks: function () {
             return Talks.find({}, {
@@ -39,5 +41,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-
+    Meteor.publish('talks', function () {
+        return Talks.find();
+    });
 }
