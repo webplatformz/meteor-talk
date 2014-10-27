@@ -29,18 +29,35 @@ if (Meteor.isClient) {
                 description = $('textarea#description', form);
 
             if (title.val() && description.val()) {
-                Talks.insert({
+                Meteor.call('saveTalk', {
                     title: title.val(),
                     description: description.val()
+                }, function (error) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        title.val('');
+                        description.val('');
+                    }
                 });
-                title.val('');
-                description.val('');
             }
         }
     });
 }
 
 if (Meteor.isServer) {
+    function saveTalk(talk) {
+        check(talk, Object);
+        check(talk.title, String);
+        check(talk.description, String);
+
+        Talks.insert(talk);
+    }
+
+    Meteor.methods({
+        saveTalk: saveTalk
+    });
+
     Meteor.publish('talks', function () {
         return Talks.find();
     });
