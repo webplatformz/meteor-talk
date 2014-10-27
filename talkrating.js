@@ -16,9 +16,11 @@ if (Meteor.isClient) {
     Template.talks.events({
         'click dd button': function () {
             this.votes ? this.votes++ : this.votes = 1;
-            Talks.update({
-                _id: this._id
-            }, this);
+            Meteor.call('updateTalk', this, function (error) {
+                if (error) {
+                    console.log(error);
+                }
+            });
         }
     });
 
@@ -46,16 +48,29 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-    function saveTalk(talk) {
+    function sanitzeTalk(talk) {
         check(talk, Object);
         check(talk.title, String);
         check(talk.description, String);
 
+        if (talk.votes) {
+            check(talk.votes, Number);
+        }
+    }
+
+    function saveTalk(talk) {
+        sanitzeTalk(talk);
         Talks.insert(talk);
     }
 
+    function updateTalk(talk) {
+        sanitzeTalk(talk);
+        Talks.update(talk._id, talk);
+    }
+
     Meteor.methods({
-        saveTalk: saveTalk
+        saveTalk: saveTalk,
+        updateTalk: updateTalk
     });
 
     Meteor.publish('talks', function () {
